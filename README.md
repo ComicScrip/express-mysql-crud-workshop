@@ -1,6 +1,7 @@
 # Setup
 
 Install dependencies :
+
 ```sh
 npm i
 ```

@@ -8,9 +8,18 @@
     "dev": "nodemon src/server.js",
     "lint": "eslint --quiet --cache --fix .",
     "format": "prettier --write .",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "prepare": "husky install",
     "test:watch": "jest --watchAll"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setupTests.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "repository": {
     "type": "git",
@@ -26,6 +35,8 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.1",
     "jest": "^27.5.1",
+    "joi": "^17.6.0",
+    "mysql2": "^2.3.3",
     "supertest": "^6.2.2"
   },
   "devDependencies": {
