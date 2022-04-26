@@ -23,6 +23,20 @@ app.get('/products', async (req, res) => {
   }
 });
 
+app.get('/products/:id', async (req, res) => {
+  try {
+    const [[product]] = await db
+      .promise()
+      .query('SELECT * FROM products WHERE id = ?', [req.params.id]);
+
+    if (product) res.send(product);
+    else res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 db.connect((err) => {
   if (err) console.error('error connecting to db');
 });

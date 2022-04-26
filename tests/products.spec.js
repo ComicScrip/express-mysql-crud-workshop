@@ -65,7 +65,7 @@ describe('products', () => {
     });
   });
 
-  xdescribe('GET /products/:id', () => {
+  describe('GET /products/:id', () => {
     describe('with an existing product in DB', () => {
       let product;
       beforeEach(async () => {
@@ -94,8 +94,10 @@ describe('products', () => {
     });
 
     describe('without an existing product in DB', () => {
-      xit('should return a 404 status code and no body', async () => {
-        // TODO
+      it('should return a 404 status code and no body', async () => {
+        res = await request(app).get('/products/999999');
+        expect(res.statusCode).toBe(404);
+        expect(Object.keys(res.body).length).toBe(0);
       });
     });
   });
