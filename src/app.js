@@ -92,6 +92,20 @@ app.patch('/products/:id', async (req, res) => {
   }
 });
 
+app.delete('/products/:id', async (req, res) => {
+  try {
+    const [{ affectedRows }] = await db
+      .promise()
+      .query('DELETE FROM products WHERE id = ?', [req.params.id]);
+
+    if (affectedRows !== 0) res.sendStatus(204);
+    else res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 db.connect((err) => {
   if (err) console.error('error connecting to db');
 });

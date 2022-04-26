@@ -373,7 +373,7 @@ describe('products', () => {
     });
   });
 
-  xdescribe('DELETE /products/:id', () => {
+  describe('DELETE /products/:id', () => {
     describe('with an existing product in DB', () => {
       let product;
       beforeEach(async () => {
@@ -394,8 +394,12 @@ describe('products', () => {
         expect(res.statusCode).toBe(204);
       });
 
-      xit('should delete the product in DB', async () => {
-        // TODO
+      it('should delete the product in DB', async () => {
+        const [[data]] = await db
+          .promise()
+          .query('SELECT * FROM products WHERE id = ?', [product.id]);
+
+        expect(data).not.toBeDefined();
       });
     });
 
