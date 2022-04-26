@@ -48,8 +48,19 @@ describe('products', () => {
     });
 
     describe('with a malicious max_price filter', () => {
-      xit('should be protected against SQL injections', async () => {
-        // TODO
+      it('should be protected against SQL injections', async () => {
+        await db
+          .promise()
+          .query(
+            "INSERT INTO products (name, price) VALUES ('laptop', 1500), ('socks', 5.95), ('usb fan', 19.99)"
+          );
+        res = await request(app).get(
+          '/products?max_price=20;DROP%20TABLE%20products'
+        );
+        expect(res.body.length).toBe(2);
+        const [products] = await db.promise().query('SELECT * FROM products');
+
+        expect(products.length).toBe(3);
       });
     });
   });

@@ -6,8 +6,16 @@ const app = express();
 app.get('/', (req, res) => res.send('hello'));
 
 app.get('/products', async (req, res) => {
+  const { max_price } = req.query;
+  let sql = 'SELECT * FROM products';
+  const valuesToEscape = [];
+  if (max_price) {
+    sql += ' WHERE price <= ?';
+    valuesToEscape.push(max_price);
+  }
+
   try {
-    const [products] = await db.promise().query('SELECT * FROM products');
+    const [products] = await db.promise().query(sql, valuesToEscape);
     res.send(products);
   } catch (err) {
     console.error(err);
