@@ -102,7 +102,7 @@ describe('products', () => {
     });
   });
 
-  xdescribe('POST /products', () => {
+  describe('POST /products', () => {
     describe('with valid attributes', () => {
       const payload = { name: 'computer', price: 500 };
 
@@ -110,8 +110,8 @@ describe('products', () => {
         res = await request(app).post('/products').send(payload);
       });
 
-      xit('should return a 201 status code', async () => {
-        // TODO
+      it('should return a 201 status code', async () => {
+        expect(res.statusCode).toBe(201);
       });
 
       it('should return the created product in DB', async () => {
@@ -232,7 +232,7 @@ describe('products', () => {
     });
   });
 
-  xdescribe('PATCH /products/:id', () => {
+  describe('PATCH /products/:id', () => {
     describe('with an existing product in DB', () => {
       let product;
       beforeEach(async () => {
