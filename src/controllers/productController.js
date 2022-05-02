@@ -11,6 +11,18 @@ async function handleGetProducts(req, res) {
   }
 }
 
+async function handleGetOneProduct(req, res) {
+  try {
+    const product = await Product.findOne(req.params.id);
+    if (product) res.send(product);
+    else res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+}
+
 module.exports = {
   handleGetProducts,
+  handleGetOneProduct,
 };

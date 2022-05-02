@@ -12,6 +12,14 @@ async function findMany({ max_price }) {
   return products;
 }
 
+async function findOne(id) {
+  const [[product]] = await db
+    .promise()
+    .query('SELECT * FROM products WHERE id = ?', [id]);
+  return product;
+}
+
 module.exports = {
   findMany,
+  findOne,
 };

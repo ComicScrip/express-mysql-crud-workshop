@@ -33,20 +33,6 @@ app.post('/products', async (req, res) => {
   }
 });
 
-app.get('/products/:id', async (req, res) => {
-  try {
-    const [[product]] = await db
-      .promise()
-      .query('SELECT * FROM products WHERE id = ?', [req.params.id]);
-
-    if (product) res.send(product);
-    else res.sendStatus(404);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
-
 app.patch('/products/:id', async (req, res) => {
   try {
     const [[product]] = await db
