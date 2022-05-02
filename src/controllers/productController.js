@@ -22,7 +22,23 @@ async function handleGetOneProduct(req, res) {
   }
 }
 
+async function handlePost(req, res) {
+  try {
+    const { name, price } = req.body;
+    const validationErrors = Product.validate({ name, price });
+
+    if (validationErrors) {
+      return res.status(422).json({ errors: validationErrors.details });
+    }
+    res.status(201).send(await Product.create({ name, price }));
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+}
+
 module.exports = {
   handleGetProducts,
   handleGetOneProduct,
+  handlePost,
 };
